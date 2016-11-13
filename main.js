@@ -79,9 +79,9 @@ var questions = [
   "Does your animal have feathers?"
 ];
 
-var guessedAnimal = [  "daddylonglegs", "bee", "penguin", "eagle", "giraffe", "octopus", "tiger", "elephant", "jellyfish", "bull", "parrot",
-  "dolphin", "python", "crocodile", "cat", "leopard", "monkey", "zebra", "sheep", "rat", "owl", "spider", "frog", "polarbear", "snail", "tortoise",
-  "rabbit", "salmon", "rhino", "fox"];
+// var guessedAnimal = [  "daddylonglegs", "bee", "penguin", "eagle", "giraffe", "octopus", "tiger", "elephant", "jellyfish", "bull", "parrot",
+//   "dolphin", "python", "crocodile", "cat", "leopard", "monkey", "zebra", "sheep", "rat", "owl", "spider", "frog", "polarbear", "snail", "tortoise",
+//   "rabbit", "salmon", "rhino", "fox"];
 
 // for (var key in animalFeatures) {
 //   console.log(animalFeatures[key].length);
@@ -94,7 +94,6 @@ function askQuestion() {
   var count = 0;
   while (!guessed && count < 20 ) {
     console.log(questions[count]); // Displaying questions
-    count++;
 
     // prompt.start();
     // prompt.get(['userInput'], function (err, result) {
@@ -111,8 +110,14 @@ function askQuestion() {
     // Wait for user's response.
     var userInput = readlineSync.question('Your Answer: ');
     if (userInput == "yes") {
-      
+      makeEducatedGuess(count, true);
+      console.log(animal);
     }
+    else {
+      makeEducatedGuess(count, false);
+      console.log(animal);
+    }
+    count++;
 
   }
 }
@@ -121,6 +126,26 @@ function increaseProbability() {
 
 }
 
-function makeEducatedGuess() {
-
+function makeEducatedGuess(count, isPresent) {
+  var index = 0;
+  for (var key in animal) {
+    console.log(animalFeatures[Object.keys(animalFeatures)[count]][index]+ " ---- " + isPresent);
+    if (isPresent) {
+      if ((animalFeatures[Object.keys(animalFeatures)[count]][index] == 1) && (animal[key] >= 0)) {
+        animal[key]++;
+      }
+      else {
+        animal[key] = -1;
+      }
+    }
+    else {
+      if ((animalFeatures[Object.keys(animalFeatures)[count]][index] == 0) && (animal[key] >= 0)) {
+        animal[key]++;
+      }
+      else {
+        animal[key] = -1;
+      }
+    }
+    index++;
+  }
 }

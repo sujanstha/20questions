@@ -1,0 +1,8 @@
+{
+  "name": "20 Questions",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies" : {
+    "cheerio": ""
+  }
+}

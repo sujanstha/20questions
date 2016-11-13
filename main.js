@@ -79,14 +79,6 @@ var questions = [
   "Does your animal have feathers?"
 ];
 
-// var guessedAnimal = [  "daddylonglegs", "bee", "penguin", "eagle", "giraffe", "octopus", "tiger", "elephant", "jellyfish", "bull", "parrot",
-//   "dolphin", "python", "crocodile", "cat", "leopard", "monkey", "zebra", "sheep", "rat", "owl", "spider", "frog", "polarbear", "snail", "tortoise",
-//   "rabbit", "salmon", "rhino", "fox"];
-
-// for (var key in animalFeatures) {
-//   console.log(animalFeatures[key].length);
-// }
-
 askQuestion();
 
 function askQuestion() {
@@ -95,41 +87,49 @@ function askQuestion() {
   while (!guessed && count < 20 ) {
     console.log(questions[count]); // Displaying questions
 
-    // prompt.start();
-    // prompt.get(['userInput'], function (err, result) {
-    //   if (err) { return onErr(err); }
-    //   console.log('Your Answer: ' + result.userInput);
-    // });
-    // prompt.get(['userInput']).then(result => {
-    //   console.log('Your Answer: ' + result.userInput);
-    // })
-    // .catch(function(error) {
-    //   console.log(error);
-    // });
-
     // Wait for user's response.
     var userInput = readlineSync.question('Your Answer: ');
     if (userInput == "yes") {
-      makeEducatedGuess(count, true);
-      console.log(animal);
+      increaseProbability(count, true);
+      // console.log(animal);
     }
     else {
-      makeEducatedGuess(count, false);
-      console.log(animal);
+      increaseProbability(count, false);
+      // console.log(animal);
     }
     count++;
 
+    // Guessing
+    var countPossibility = 0;
+    var guessedKey = '';
+    for (var key in animal) {
+      if (animal[key] >= 0) {
+        countPossibility++;
+        guessedKey = key;
+      }
+    }
+    if (countPossibility == 1) {
+      console.log('Is your word '+ guessedKey + "?");
+      count = 20;
+    }
+  }
+  // Wait for user's response.
+  var isCorrect = readlineSync.question('Your Answer: ');
+  if (isCorrect == "yes") {
+    return console.log("I won!");
+  }
+  else {
+    return console.log("You won! I can't guess your word.");
   }
 }
 
-function increaseProbability() {
+function makeEducatedGuess() {
 
 }
 
-function makeEducatedGuess(count, isPresent) {
+function increaseProbability(count, isPresent) {
   var index = 0;
   for (var key in animal) {
-    console.log(animalFeatures[Object.keys(animalFeatures)[count]][index]+ " ---- " + isPresent);
     if (isPresent) {
       if ((animalFeatures[Object.keys(animalFeatures)[count]][index] == 1) && (animal[key] >= 0)) {
         animal[key]++;
@@ -139,7 +139,7 @@ function makeEducatedGuess(count, isPresent) {
       }
     }
     else {
-      if ((animalFeatures[Object.keys(animalFeatures)[count]][index] == 0) && (animal[key] >= 0)) {
+      if ((animalFeatures[Object.keys(animalFeatures)[count]][index] === 0) && (animal[key] >= 0)) {
         animal[key]++;
       }
       else {

@@ -59,7 +59,7 @@ var animalFeatures = {
 var questions = [
   "Is your animal a mammal?",
   "Does your animal fly?",
-  "Does you your animal live in water only or on land & in water?",
+  "Does your animal live in water?",
   "Does your animal have a beak?",
   "Is your animal nocturnal?",
   "Does your animal have a shell?",
@@ -84,6 +84,7 @@ askQuestion();
 function askQuestion() {
   var guessed = false;
   var count = 0;
+  console.log('Think of an animal!');
   while (!guessed && count < 20 ) {
     console.log(questions[count]); // Displaying questions
 
@@ -121,10 +122,6 @@ function askQuestion() {
   else {
     return console.log("You won! I can't guess your word.");
   }
-}
-
-function makeEducatedGuess() {
-
 }
 
 function increaseProbability(count, isPresent) {
